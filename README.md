@@ -30,3 +30,4 @@ Output: error-corrected and demultiplexed fastq reads.
 4. Porechop
 5. Rallentare per non overwelmare il cluster
 6. Aggiungere FLARE?
+7. Nascondi piu cose come i barcodes?
