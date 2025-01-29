@@ -3,6 +3,9 @@
 Nextflow based CELLO-seq pipeline optimised for SLURM clusters. 
 If steps have same number, they are synchronous. 
 
+### Dealing with pipeline errors 
+Each run creates a html report (run_report_YYYY-MM-DD_hh-ss.html). If there are issues, you look for the error codes. If this is not enough, you can identify the problematic processes and cd ```work/problematic/process``` and ```ls -lha``` to see all files: .command.out and .command.err are the most useful. 
+
 ## Step I: pre demultiplexing 
 ### How to run
 1. Edit parameters.json
@@ -29,7 +32,6 @@ nextflow -bg run step_1.nf -params-file parameters.json > step_1.log
 - bg: background, enables run to continue even if you log out from cluster
 - stdout is saved into step_1.log
 - If you see barcode_\*.fastq and barcode_\*.fastq.rds , process is done.
-- Check run_report_YYYY-MM-DD_hh-ss.html for recap
 - Only remove work/ dir once you are happy with the outcome
 ```
 rm -rf work/
@@ -45,6 +47,17 @@ Input: reads (*fastq.gz)
 Output: barcode_\*.fastq and barcode_\*.fastq.rds
 
 ## Step II: post demultiplexing
+### How to run
+1. Edit parameters.json (see above)
+2. Run nextflow (see above for description)
+```
+module load nextflow
+nextflow -bg run step_II.nf -params-file parameters.json > step_II.log
+```
+3. Remove work/ only when you are done
+4. Continue to FLAIR pipeline
+
+### Description
 Input: barcode_\*.fastq, barcode_\*.fastq.rds, tso.rds, dT.rds. 
 - Analysis is repeated per barcode
 1. dT adaptor filer
