@@ -8,7 +8,8 @@ Each run creates a html report (run_report_YYYY-MM-DD_hh-ss.html). If there are 
 
 ## Step I: pre demultiplexing 
 ### How to run
-1. Edit parameters.json
+1. cd to your directory with your raw CELLO-seq fastq files
+2. Edit parameters.json
 ```
 {
     "singularity": "/path/to/sarlacc.img", 
