@@ -4,6 +4,37 @@ Nextflow based CELLO-seq pipeline optimised for SLURM clusters.
 If steps have same number, they are synchronous. 
 
 ## Step I: pre demultiplexing 
+### How to run
+1. Edit parameters.json
+```
+{
+    "singularity": "/path/to/sarlacc.img", 
+    "path": "/path/to/your/folder",
+
+    "queue": "test/short/long",
+    "cpus": "#",
+    "time": "#day ##hours ##minutes ##seconds",
+    "memory": "### GB",
+    "minimap_reference_index": "/path/to/genome.fa.mmi",
+    "experiment_name": "experiment_name",
+    "input_files" : "Common ending of input files: *.fastq.gz"
+
+}
+```
+2. Run nextflow
+```
+module load nextflow
+nextflow -bg run step_1.nf -params-file parameters.json > step_1.log
+```
+- bg: background, enables run to continue even if you log out from cluster
+- stdout is saved into step_1.log
+- If you see barcode_\*.fastq and barcode_\*.fastq.rds , process is done.
+- Check run_report_YYYY-MM-DD_hh-ss.html for recap
+- Only remove work/ dir once you are happy with the outcome
+```
+rm -rf work/
+```
+
 ### Description
 Input: reads (*fastq.gz)
 1. Concatenates them into one file
@@ -12,11 +43,6 @@ Input: reads (*fastq.gz)
 2. Runs dT and TSO adaptor qc (see .html)
 2. Demultiplexes plate into barcodes
 Output: barcode_\*.fastq and barcode_\*.fastq.rds
-
-### How to run
-```
-echo hi
-```
 
 ## Step II: post demultiplexing
 Input: barcode_\*.fastq, barcode_\*.fastq.rds, tso.rds, dT.rds. 
