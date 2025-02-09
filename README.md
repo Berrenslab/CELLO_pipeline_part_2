@@ -28,7 +28,7 @@ Each run creates a html report (run_report_YYYY-MM-DD_hh-ss.html). If there are 
 2. Run nextflow
 ```
 module load nextflow
-nextflow -bg run step_1.nf -params-file parameters.json > step_1.log
+nextflow -bg run /ceph/project/CELLOseq/frivetti/next/code/step_1.nf -params-file parameters.json > output/step_1.log
 ```
 - bg: background, enables run to continue even if you log out from cluster
 - stdout is saved into step_1.log
@@ -53,7 +53,7 @@ Output: barcode_\*.fastq and barcode_\*.fastq.rds
 2. Run nextflow (see above for description)
 ```
 module load nextflow
-nextflow -bg run step_II.nf -params-file parameters.json > step_II.log
+nextflow -bg run /ceph/project/CELLOseq/frivetti/next/code/step_II.nf -params-file parameters.json > step_II.log
 ```
 3. Remove work/ only when you are done
 4. Continue to FLAIR pipeline
