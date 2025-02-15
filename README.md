@@ -78,3 +78,4 @@ Output: error-corrected and demultiplexed fastq reads.
 8. Sputa fuori i html utili
 9. crea folder per output?
 10. pachettizza
+11. Step 1 aggiungi due - una per tutto e una per demu
