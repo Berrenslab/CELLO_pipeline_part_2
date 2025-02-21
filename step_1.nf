@@ -68,8 +68,8 @@ process contamination_map{
     echo Map to reference genome to check for contaminations > map_contaminations.txt
     realpath $params.minimap_reference_index >> map_contaminations.txt
     
-    module load minimap2
-    module load samtools
+    module load minimap2/2.17 2>/dev/null || module load minimap2/2.17-GCC-8.3.0 2>/dev/null
+    module load samtools 2>/dev/null || module load SAMtools 2>/dev/null
 
     minimap2 -ax map-ont "$params.minimap_reference_index" ${params.experiment_name}_less20kb.fastq > ${params.experiment_name}.sam
 
