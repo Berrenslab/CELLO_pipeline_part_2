@@ -153,7 +153,7 @@ process corrected_merge{
     script:
     """ 
     for barcode in {1..96}; do
-        cat barcode_\${barcode}_*_corrected_all.fastq > corrected_barcode_\${barcode}.fastq
+        cat barcode_\${barcode}_*_corrected_all.fastq > corrected_barcode_\${barcode}.fastq || echo $barcode
     done
     
     """
