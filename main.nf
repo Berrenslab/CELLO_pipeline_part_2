@@ -148,16 +148,14 @@ process corrected_merge{
     file correct_fastqs
 
     output: 
-    path "barcode_*_${params.experiment_name}_corrected.fastq"
+    path "corrected_barcode_*.fastq"
 
     script:
-    """
-    barcodes=(\$(ls barcode_*_*_corrected_all.fastq | sed -E 's/(barcode_[0-9]+)_.*/\1/' | sort -u))
-
-    for value in "\${barcodes[@]}"; do
-        echo "\$value"
-        cat "\${value}"_*_corrected_all.fastq > "barcode_\${value}_${params.experiment_name}_corrected.fastq"
+    """ 
+    for barcode in {1..96}; do
+        cat barcode_\${barcode}_*_corrected_all.fastq > corrected_barcode_\${barcode}.fastq
     done
+    
     """
 }
 
