@@ -3,6 +3,11 @@
     "path": "/ceph/project/CELLOseq",
 
     "queue": "test",
+    "dT_filter_queue": "",
+    "TSO_filter_queue": "",
+    "align_queue": "",
+    "grouping_queue": "",
+    "err_corr_queue": "",
     "cpus": "1",
     "time": "00:09:30",
     "memory": "20 GB",
