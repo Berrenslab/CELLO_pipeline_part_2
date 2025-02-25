@@ -70,7 +70,7 @@ process TSO_adaptor_filter {
     echo TSO
     singularity exec -B $params.path $params.singularity R --vanilla -e "
     rmarkdown::render('${baseDir}/bin/internal_adaptor_filter_dT100k.Rmd', knit_root_dir = '\$PWD', intermediates_dir = '\$PWD',
-    params = list(barcode = '${fastq_file}', adaptor.type = 'TSO'), output_file = '${launchDir}/output/internal_adaptor_filter_TSO_${fastq_file}.html')"
+    params = list(barcode = '${fastq_file}', adaptor.type = 'TSO'), output_file = '${launchDir}/output/per_barcode_htmls/internal_adaptor_filter_TSO_${fastq_file}.html')"
     """
 }
 
@@ -111,7 +111,7 @@ process grouping{
     echo $id
     singularity exec -B $params.path $params.singularity R --vanilla -e "rmarkdown::render('${baseDir}/bin/grouping.Rmd', 
    knit_root_dir = '\$PWD' , intermediates_dir = '\$PWD', params = 
-  list(barcode = '$id', fastq_rds = '$fastq_rds' , sam = '$sam', dt_middle_rds = '$dt_rds', tso_middle_rds = '$tso_rds'), output_file = '${launchDir}/output/grouping_${id}.html')"
+  list(barcode = '$id', fastq_rds = '$fastq_rds' , sam = '$sam', dt_middle_rds = '$dt_rds', tso_middle_rds = '$tso_rds'), output_file = '${launchDir}/output/per_barcode_htmls/grouping_${id}.html')"
     """
 }
 
@@ -132,7 +132,7 @@ process err_corr{
     echo $all 
     singularity exec -B $params.path $params.singularity R --vanilla -e "rmarkdown::render('${baseDir}/bin/errorcorrect.Rmd', 
    knit_root_dir = '\$PWD' , intermediates_dir = '\$PWD', params = 
-  list(barcode = '$id', group_rds = '$group_rds', fastq_rds = '$fastq_rds'), output_file = '${launchDir}/output/error_corr_${group_rds}.html')"
+  list(barcode = '$id', group_rds = '$group_rds', fastq_rds = '$fastq_rds'), output_file = '${launchDir}/output/per_barcode_htmls/error_corr_${group_rds}.html')"
 
     """
 
