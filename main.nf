@@ -27,6 +27,7 @@ all_fastq = Channel.fromPath("${launchDir}/output/${params.experiment_name}_less
 
 process dT_adaptor_filter {
     clusterOptions '--job-name=dt_internal_filter'
+    queue params.dT_filter_queue
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
@@ -51,6 +52,7 @@ process dT_adaptor_filter {
 
 process TSO_adaptor_filter {
     clusterOptions '--job-name=tso_internal_filter'
+    queue params.TSO_filter_queue
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
@@ -76,6 +78,7 @@ process TSO_adaptor_filter {
 
 process align {
     clusterOptions '--job-name=minimap'
+    queue params.align_queue
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
@@ -97,6 +100,7 @@ process align {
 
 process grouping{
     clusterOptions '--job-name=grouping'
+    queue params.grouping_queue
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
@@ -117,6 +121,7 @@ process grouping{
 
 process err_corr{
     clusterOptions '--job-name=grouping'
+    queue params.err_corr_queue
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
@@ -139,8 +144,9 @@ process err_corr{
 }
 
 process corrected_merge{
-    publishDir "${launchDir}/output/", mode: 'move'
+    publishDir "${launchDir}/output/", mode: 'copy'
     clusterOptions '--job-name=corr_merge'
+    queue params.err_corr_queue
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
