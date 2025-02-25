@@ -89,7 +89,7 @@ process align {
 
     script:
     """
-    module load minimap2/2.17
+    module load minimap2/2.17 2>/dev/null || module load minimap2/2.17-GCC-8.3.0 2>/dev/null
     out=$fastq_file
     minimap2 -ax map-ont $genome $fastq_file > \${out%fastq}sam
     """
