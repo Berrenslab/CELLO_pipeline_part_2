@@ -45,7 +45,7 @@ process dT_adaptor_filter {
     echo dT
     singularity exec -B $params.path $params.singularity R --vanilla -e "
     rmarkdown::render('${baseDir}/bin/internal_adaptor_filter_dT100k.Rmd', knit_root_dir = '\$PWD', intermediates_dir = '\$PWD', 
-    params = list(barcode = '${fastq_file}', adaptor.type = 'dT'), output_file = '${launchDir}/output/internal_adaptor_filter_dT_${fastq_file}.html')"
+    params = list(barcode = '${fastq_file}', adaptor.type = 'dT'), output_file = '${launchDir}/output/per_barcode_htmls/internal_adaptor_filter_dT_${fastq_file}.html')"
     """
 }
 
