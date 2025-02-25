@@ -190,6 +190,8 @@ workflow {
                                                     Experiment: $params.experiment_name
                                                         *Transposomic slay*
   """
+    // create output dir for per barcode htmls
+    new File("${launchDir}/output/per_barcode_htmls").mkdirs()
 
     // adaptor filter and mapping at once 
 
