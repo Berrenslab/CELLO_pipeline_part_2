@@ -28,7 +28,8 @@ Each run creates a html report (run_report_YYYY-MM-DD_hh-ss.html). If there are 
 2. Run nextflow
 ```
 module load nextflow
-nextflow -bg run /ceph/project/CELLOseq/frivetti/next/code/step_1.nf -latest -params-file parameters.json > output/step_1.log
+nextflow -bg run https://github.com/Berrenslab/CELLO_pipeline_part_2 -main-script CCB/main.nf -params-file 1_params.json -latest > output/step_2.log
+
 ```
 - bg: background, enables run to continue even if you log out from cluster
 - stdout is saved into step_1.log
