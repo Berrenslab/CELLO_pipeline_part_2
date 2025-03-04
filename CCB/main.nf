@@ -55,10 +55,10 @@ process dT_adaptor_filter {
 
 process TSO_adaptor_filter {
     clusterOptions '--job-name=tso_internal_filter'
-    queue params.tso_queue
+    queue = { task.attempt == 2 ? 'long' : params.tso_queue }
     cpus params.tso_cpus
-    time params.tso_time
-    memory params.tso_mem
+    time = { task.attempt == 2 ? '6day 23hours 59minutes 30seconds' : params.tso_time }
+    memory = { task.attempt == 2 ? '500 GB' : params.tso_mem }
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
@@ -84,10 +84,10 @@ process TSO_adaptor_filter {
 
 process align {
     clusterOptions '--job-name=minimap'
-    queue params.align_queue
+    queue = { task.attempt == 2 ? 'long' : params.align_queue }
     cpus params.align_cpus
-    time params.align_time
-    memory params.align_mem
+    time = { task.attempt == 2 ? '6day 23hours 59minutes 30seconds' : params.align_time }
+    memory = { task.attempt == 2 ? '500 GB' : params.align_mem }
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
@@ -109,10 +109,10 @@ process align {
 
 process grouping{
     clusterOptions '--job-name=grouping'
-    queue params.grouping_queue
+    queue = { task.attempt == 2 ? 'long' : params.grouping_queue }
     cpus params.grouping_cpus
-    time params.grouping_time
-    memory params.grouping_mem
+    time = { task.attempt == 2 ? '6day 23hours 59minutes 30seconds' : params.grouping_time }
+    memory = { task.attempt == 2 ? '500 GB' : params.grouping_mem }
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
@@ -133,10 +133,10 @@ process grouping{
 
 process err_corr{
     clusterOptions '--job-name=grouping'
-    queue params.err_queue
+    queue = { task.attempt == 2 ? 'long' : params.err_queue }
     cpus params.err_cpus
-    time params.err_time
-    memory params.err_mem
+    time = { task.attempt == 2 ? '6day 23hours 59minutes 30seconds' : params.err_time }
+    memory = { task.attempt == 2 ? '500 GB' : params.err_mem }
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
@@ -161,10 +161,10 @@ process err_corr{
 process corrected_merge{
     publishDir "${launchDir}/output/", mode: 'copy'
     clusterOptions '--job-name=corr_merge'
-    queue params.merge_queue
+    queue = { task.attempt == 2 ? 'long' : params.merge_queue }
     cpus params.merge_cpus
-    time params.merge_time
-    memory params.merge_mem
+    time = { task.attempt == 2 ? '6day 23hours 59minutes 30seconds' : params.merge_time }
+    memory = { task.attempt == 2 ? '500 GB' : params.merge_mem }
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
