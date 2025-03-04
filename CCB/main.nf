@@ -27,10 +27,10 @@ all_fastq = Channel.fromPath("${launchDir}/output/${params.experiment_name}_less
 
 process dT_adaptor_filter {
     clusterOptions '--job-name=dt_internal_filter'
-    queue params.dt_queue
+    queue = { task.attempt == 2 ? 'long' : params.dt_queue }
     cpus params.dt_cpus
-    time params.dt_time
-    memory params.dt_mem
+    time = { task.attempt == 2 ? '6day 23hours 59minutes 30seconds' : params.dt_time }
+    memory = { task.attempt == 2 ? '500 GB' : params.dt_mem }
     maxRetries 2
     errorStrategy { task.attempt <= 2 ? 'retry' : 'finish' }
 
