@@ -217,6 +217,8 @@ workflow {
     // create output dir for per barcode htmls
     new File("${launchDir}/output/per_barcode_htmls").mkdirs()
 
+    println "Base directory: ${baseDir}"
+
     // adaptor filter and mapping at once 
 
     id_dt_tso_sam_fastqrds = dT_adaptor_filter(fastqs, dt_threshold_rds.first()) 
