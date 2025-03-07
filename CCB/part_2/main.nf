@@ -14,12 +14,12 @@ tso_threshold_rds = Channel.fromPath("${launchDir}/intermediates/adaptor_TSO_thr
 reference_index = Channel.fromPath(params.minimap_reference_index)
 
 // grouping rmd 
-//grouping_script = Channel.fromPath("bin/grouping.Rmd")
+//grouping_script = Channel.fromPath("${baseDir}/../bin/grouping.Rmd")
 barcode_rds = Channel.fromPath("${launchDir}/intermediates/barcode_*.fastq.rds")
     .map {rds -> tuple(rds.baseName.tokenize('.')[0], rds)}
 
 // err_corr rmd 
-//errcorr_script = Channel.fromPath("bin/errorcorrect.Rmd")
+//errcorr_script = Channel.fromPath("${baseDir}/../bin/errorcorrect.Rmd")
 barcode_rds_err = Channel.fromPath("${launchDir}/intermediates/barcode_*.fastq.rds")
     .map {rds -> tuple(rds.baseName.tokenize('.')[0], rds)}
 
@@ -48,7 +48,7 @@ process dT_adaptor_filter {
     echo $fastq_file
     echo dT
     singularity exec -B $params.path $params.singularity R --vanilla -e "
-    rmarkdown::render('${baseDir}/bin/internal_adaptor_filter_dT100k.Rmd', knit_root_dir = '\$PWD', intermediates_dir = '\$PWD', 
+    rmarkdown::render('${baseDir}/../bin/internal_adaptor_filter_dT100k.Rmd', knit_root_dir = '\$PWD', intermediates_dir = '\$PWD', 
     params = list(barcode = '${fastq_file}', adaptor.type = 'dT'), output_file = '${launchDir}/output/per_barcode_htmls/internal_adaptor_filter_dT_${fastq_file}.html')"
     """
 }
@@ -77,7 +77,7 @@ process TSO_adaptor_filter {
     echo $fastq_file
     echo TSO
     singularity exec -B $params.path $params.singularity R --vanilla -e "
-    rmarkdown::render('${baseDir}/bin/internal_adaptor_filter_dT100k.Rmd', knit_root_dir = '\$PWD', intermediates_dir = '\$PWD',
+    rmarkdown::render('${baseDir}/../bin/internal_adaptor_filter_dT100k.Rmd', knit_root_dir = '\$PWD', intermediates_dir = '\$PWD',
     params = list(barcode = '${fastq_file}', adaptor.type = 'TSO'), output_file = '${launchDir}/output/per_barcode_htmls/internal_adaptor_filter_TSO_${fastq_file}.html')"
     """
 }
@@ -216,8 +216,6 @@ workflow {
   """
     // create output dir for per barcode htmls
     new File("${launchDir}/output/per_barcode_htmls").mkdirs()
-
-    println "Base directory: ${baseDir}"
 
     // adaptor filter and mapping at once 
 
